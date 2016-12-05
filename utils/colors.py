@@ -10,4 +10,4 @@ def get_spaced_colors(n):
 
 def gen_static_colors(n):
     global static_colors
-    
+    static_colors = get_spaced_colors(n)
