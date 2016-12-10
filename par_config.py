@@ -7,3 +7,7 @@ nb_validation_samples = 24000
 epochs = 60
 batch_size = 16
 imagePath = "collection/Images/users/his109/grier_food_images/"
+
+
+dataset_csv_file = "supervis.csv"
+dataset_csv_path = ""
