@@ -1,4 +1,5 @@
 import pickle
+import logging as log
 
 def get_classes(filename):
     with open(filename, 'rb') as handle:
