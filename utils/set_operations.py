@@ -1,3 +1,6 @@
+import logging as log
+
+
 def union(a,b):
     x = min(a[0], b[0])
     y = min(a[1], b[1])
@@ -23,16 +26,16 @@ def intersection_over_union(bounding_box, ground_truth_bounding_box):
     area_2 = area(ground_truth_bounding_box)
     # no overlapping area
     if(bounding_box[0] > ground_truth_bounding_box[2]):
-        print([bounding_box,ground_truth_bounding_box])
+        log.info([bounding_box,ground_truth_bounding_box])
         return -100
     if(bounding_box[2] < ground_truth_bounding_box[0]):
-        print([bounding_box,ground_truth_bounding_box])
+        log.info([bounding_box,ground_truth_bounding_box])
         return -200
     if(bounding_box[1] > ground_truth_bounding_box[3]):
-        print([bounding_box,ground_truth_bounding_box])
+        log.info([bounding_box,ground_truth_bounding_box])
         return -300
     if(bounding_box[3] < ground_truth_bounding_box[1]):
-        print([bounding_box,ground_truth_bounding_box])
+        log.info([bounding_box,ground_truth_bounding_box])
         return -400
     # Positive overlapping area
     ex_0 = max(bounding_box[0], ground_truth_bounding_box[0])
