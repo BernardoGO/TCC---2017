@@ -12,3 +12,5 @@ imagePath = "collection/Images/users/his109/grier_food_images/"
 dataset_csv_file = "supervis.csv"
 dataset_csv_path = ""
 classes_pickle_file = 'classesROI.pickle'
+
+_CLASSES_TO_IGNORE_ = ["plate", "rag"]
