@@ -56,3 +56,12 @@ def initializeModel():
               metrics=['accuracy'])
     model.summary()
     return model
+
+
+"""
+
+import copy
+print("Initializing Model...")
+ldModel = initializeModel()
+tensorboard = TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
+"""
