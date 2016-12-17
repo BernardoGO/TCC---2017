@@ -47,3 +47,34 @@ def compareROIs(imageXmlPath, dr, rect_pos):
                 log.info(")))))))->>" + str(jaccard))
 
         dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
+
+def joinROIS(class_scores):
+    print("RoI Count: " + str(len(class_scores)))
+    from shapely.geometry import Polygon, box
+    print("joining rois")
+    foid = True
+    coverage = 0.001
+    while foid:
+        breako = False
+        #if coverage <0.90:
+        #    coverage += 0.01
+        for ii in class_scores:
+            for xx in class_scores:
+                if xx == ii: continue
+                #rectxx = box(xx[3],xx[2], xx[1], xx[0], True)
+                #rectii = box(ii[3],ii[2], ii[1], ii[0], True)
+                iou = abs(intersectionOverUnion(xx,ii))
+
+                #rectxx.intersects(rectii)
+                if iou > coverage and (ii[4] == xx[4]):
+                    #print(coverage)
+                    ii[0] = min(ii[0],  xx[0])
+                    ii[1] = min(ii[1],  xx[1])
+                    ii[2] = max(ii[2],  xx[2])
+                    ii[3] = max(ii[3],  xx[3])
+                    class_scores.remove(xx)
+                    breako = True
+                    break
+            if breako: break
+        if breako: continue
+        break
