@@ -1,6 +1,9 @@
+import par_config
+from random import randint
+
 def testImage():
     import time
-    IMAGENAME = "dsc_1601"
+    IMAGENAME = par_config.test_images_folder+ par_config.test_image_name
     tstImg = IMAGENAME + ".jpg"
     #tstImg = "dsc_1734.jpg"
     img = Image.open(tstImg)
@@ -18,7 +21,7 @@ def testImage():
     print("Eval Time: " + str(elapsed))
 
     onlyres = rpn_output[0]
-    print("drawing heatmap")
+    print("Drawing Heatmap")
     image = Image.new("RGB", (sizex, sizey), "black" )#img_width, img_height
 
     #rect_pos = class_scores
@@ -96,7 +99,7 @@ def testImage():
     joinROIS(class_scores)
     rect_pos = class_scores
     #colors = get_spaced_colors(len(classes_in_image))
-    from random import randint
+
     dri = ImageDraw.Draw(ime , 'RGBA')
     font = ImageFont.truetype("sans-serif.ttf", 18)
     compareROIs(IMAGENAME + ".xml", dri, rect_pos)

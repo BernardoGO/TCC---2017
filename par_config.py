@@ -14,3 +14,9 @@ dataset_csv_path = ""
 classes_pickle_file = 'classesROI.pickle'
 
 _CLASSES_TO_IGNORE_ = ["plate", "rag"]
+
+test_images_folder = "test_images/"
+test_images_xml_folder = "test_images/"
+test_image_name = "dsc_1601"
+
+images_extension = ".jpg"
