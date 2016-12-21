@@ -1,5 +1,7 @@
 import par_config
 from random import randint
+from PIL import ImageFont, ImageDraw
+from PIL import Image
 
 def testImage():
     import time
