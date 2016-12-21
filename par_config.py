@@ -20,3 +20,4 @@ test_images_xml_folder = "test_images/"
 test_image_name = "dsc_1601"
 
 images_extension = ".jpg"
+par_config.STRIDES = 1

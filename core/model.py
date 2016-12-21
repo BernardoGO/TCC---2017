@@ -1,9 +1,19 @@
-STRIDES = 1
+from keras.preprocessing.image import ImageDataGenerator
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D
+from keras.layers import Activation, Dropout, Flatten, Dense
+from keras import backend as K
+from keras.models import save_model, load_model
+from keras.callbacks import TensorBoard
+import par_config
+
+
+
 def initializeModel():
     if K.image_data_format() == 'channels_first':
-        input_shape = (3, img_width, img_height)
+        input_shape = (3, par_config.img_width, par_config.img_height)
     else:
-        input_shape = (img_width, img_height, 3)
+        input_shape = (par_config.img_width, par_config.img_height, 3)
     model = Sequential()
     model.add(Conv2D(32, (3, 3), input_shape=input_shape, trainable=False))
     model.add(Activation('relu', trainable=False))
@@ -38,7 +48,7 @@ def initializeModel():
     model.pop()
 
 
-    model.add(Conv2D(16, (6, 6),strides=(STRIDES, STRIDES), trainable=True))
+    model.add(Conv2D(16, (6, 6),strides=(par_config.STRIDES, par_config.STRIDES), trainable=True))
     #model.add(Activation('relu', trainable=True))
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.2))

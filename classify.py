@@ -4,6 +4,8 @@ from PIL import ImageFont, ImageDraw
 from PIL import Image
 import time
 import numpy as np
+import core.model
+
 
 def testImage():
 
@@ -22,6 +24,12 @@ def testImage():
     width, height = image.size
     train_x = []
     train_x.append(np.array(image))
+
+
+    print("Initializing Model...")
+    ldModel = core.model.initializeModel()
+
+
     #start = time.time()
     rpn_output = ldModel.predict(np.array(train_x), batch_size=64, verbose=0)
     #end = time.time()
