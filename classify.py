@@ -2,9 +2,16 @@ import par_config
 from random import randint
 from PIL import ImageFont, ImageDraw
 from PIL import Image
+import time
+import numpy as np
 
 def testImage():
-    import time
+
+    img_width = par_config.img_width
+    img_height = par_config.img_height
+    sizex = par_config.sizex
+    sizey = par_config.sizey
+
     IMAGENAME = par_config.test_images_folder+ par_config.test_image_name
     tstImg = IMAGENAME + ".jpg"
     #tstImg = "dsc_1734.jpg"
@@ -15,12 +22,12 @@ def testImage():
     width, height = image.size
     train_x = []
     train_x.append(np.array(image))
-    start = time.time()
+    #start = time.time()
     rpn_output = ldModel.predict(np.array(train_x), batch_size=64, verbose=0)
-    end = time.time()
+    #end = time.time()
 
-    elapsed = end - start
-    print("Eval Time: " + str(elapsed))
+    #elapsed = end - start
+    #print("Eval Time: " + str(elapsed))
 
     onlyres = rpn_output[0]
     print("Drawing Heatmap")
