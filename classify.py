@@ -5,6 +5,7 @@ from PIL import Image
 import time
 import numpy as np
 import core.model
+import utils.colors
 
 
 def testImage():
@@ -58,7 +59,7 @@ def testImage():
     """
     import time
     class_scores = []
-    colors = get_spaced_colors(25)
+    colors = utils.colors.get_spaced_colors(25)
     for y_ in range(len(onlyres)):
         last_x = 0
         last_x_ct = 0
@@ -91,14 +92,14 @@ def testImage():
             x1 = 35*x_ + 35*6
             y1 = 24*y_ + 24*6
 
-            x0 = 35*(x_*STRIDES)
-            y0 = 23*(y_*STRIDES)
-            x1 = 35*(x_*STRIDES) + 35*6
-            y1 = 24*(y_*STRIDES) + 24*6
+            x0 = 35*(x_*par_config.STRIDES)
+            y0 = 23*(y_*par_config.STRIDES)
+            x1 = 35*(x_*par_config.STRIDES) + 35*6
+            y1 = 24*(y_*par_config.STRIDES) + 24*6
             if clase != 0:
                 last_x_ct += 1
                 if (last_x != clase) or (last_x == clase and last_x_ct > 10):
-                    class_scores.append([x0,y0, 35*(x_*STRIDES) + 35*2,24*(y_*STRIDES) + 24*2,clase])
+                    class_scores.append([x0,y0, 35*(x_*par_config.STRIDES) + 35*2,24*(y_*par_config.STRIDES) + 24*2,clase])
                     last_x = clase
                     last_x_ct = 0
 
