@@ -39,7 +39,7 @@ def initializeModel():
                   metrics=['accuracy'])
 
 
-    model.load_weights("image_500.h5")
+    model.load_weights(par_config.pretrained_weights_file)
     model.pop()
     model.pop()
     model.pop()
