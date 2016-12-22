@@ -5,6 +5,7 @@ from PIL import Image
 import time
 import numpy as np
 import core.model
+import core.roi_management
 import utils.colors
 
 
@@ -114,13 +115,13 @@ def testImage():
             #image.save("rcnn2.png", quality=100)
             #time.sleep(0.5)
             #print(((150*y_)//17,(150*x_)//17),((150*(y_+1))//17,(150*(x_+1))//17))
-    joinROIS(class_scores)
+    core.roi_management.joinROIS(class_scores)
     rect_pos = class_scores
     #colors = get_spaced_colors(len(classes_in_image))
 
     dri = ImageDraw.Draw(ime , 'RGBA')
     font = ImageFont.truetype("sans-serif.ttf", 18)
-    compareROIs(IMAGENAME + ".xml", dri, rect_pos)
+    core.roi_management.compareROIs(IMAGENAME + ".xml", dri, rect_pos)
     for ie in range(len(rect_pos)):
         #eft = classes_in_image[rect_pos[ie][4]]
         #xxf = eft[6]-1

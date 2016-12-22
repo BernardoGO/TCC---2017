@@ -1,5 +1,6 @@
 import par_config
 import logging as log
+import utils.set_operations
 
 def compareROIs(imageXmlPath, dr, rect_pos):
     sizex = par_config.sizex
@@ -43,7 +44,7 @@ def compareROIs(imageXmlPath, dr, rect_pos):
             if predObj[4] == classes[name.replace(" ", "_")]:
                 log.info("---------------->>" + name + ": ")
                 log.info(ptsLst)
-                jaccard = IOU(predObj[0:4], [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]])
+                jaccard = utils.set_operations.IOU(predObj[0:4], [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]])
                 log.info(")))))))->>" + str(jaccard))
 
         dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
@@ -63,7 +64,7 @@ def joinROIS(class_scores):
                 if xx == ii: continue
                 #rectxx = box(xx[3],xx[2], xx[1], xx[0], True)
                 #rectii = box(ii[3],ii[2], ii[1], ii[0], True)
-                iou = abs(intersectionOverUnion(xx,ii))
+                iou = utils.set_operations.intersectionOverUnion(xx,ii)
 
                 #rectxx.intersects(rectii)
                 if iou > coverage and (ii[4] == xx[4]):
