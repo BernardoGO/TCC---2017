@@ -1,6 +1,7 @@
 import par_config
 import logging as log
 import utils.set_operations
+import xml.etree.ElementTree
 
 def compareROIs(imageXmlPath, dr, rect_pos):
     sizex = par_config.sizex
@@ -44,7 +45,7 @@ def compareROIs(imageXmlPath, dr, rect_pos):
             if predObj[4] == classes[name.replace(" ", "_")]:
                 log.info("---------------->>" + name + ": ")
                 log.info(ptsLst)
-                jaccard = utils.set_operations.IOU(predObj[0:4], [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]])
+                jaccard = utils.set_operations.intersection_over_union(predObj[0:4], [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]])
                 log.info(")))))))->>" + str(jaccard))
 
         dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
