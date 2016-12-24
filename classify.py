@@ -7,6 +7,11 @@ import numpy as np
 import core.model
 import core.roi_management
 import utils.colors
+import utils.classes
+
+
+utils.classes.load_classes()
+
 
 
 def testImage():
