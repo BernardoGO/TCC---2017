@@ -23,3 +23,5 @@ images_extension = ".jpg"
 STRIDES = 1
 
 pretrained_weights_file = "image_500.h5"
+
+joinRoIs_considered_coverage = 0.001

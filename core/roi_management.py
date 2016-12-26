@@ -55,7 +55,7 @@ def joinROIS(class_scores):
     from shapely.geometry import Polygon, box
     print("joining rois")
     foid = True
-    coverage = 0.001
+    coverage = par_config.joinRoIs_considered_coverage
     while foid:
         breako = False
         #if coverage <0.90:
