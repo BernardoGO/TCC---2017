@@ -55,15 +55,16 @@ def initializeModel():
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.2))
     model.add(Dense(25, activation='softmax'))
-    """
+
+    if par_config.final_optimizer == "adam":
         model.compile(loss='categorical_crossentropy',
                   optimizer='adam',
                   metrics=['accuracy'])
-    """
 
-    model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
-              metrics=['accuracy'])
+    elif par_config.final_optimizer == "rmsprop":
+        model.compile(loss='binary_crossentropy',
+                  optimizer='rmsprop',
+                  metrics=['accuracy'])
     model.summary()
     return model
 
