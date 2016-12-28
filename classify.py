@@ -125,7 +125,7 @@ def testImage():
     #colors = get_spaced_colors(len(classes_in_image))
 
     dri = ImageDraw.Draw(ime , 'RGBA')
-    font = ImageFont.truetype("sans-serif.ttf", 18)
+    font = ImageFont.truetype(par_config.font_filename, 18)
     core.roi_management.compareROIs(IMAGENAME + ".xml", dri, rect_pos)
     for ie in range(len(rect_pos)):
         #eft = classes_in_image[rect_pos[ie][4]]
