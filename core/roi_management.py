@@ -11,11 +11,11 @@ def draw_boundingboxes(rect_pos,dri,colors):
     for ie in range(len(rect_pos)):
 
         color = colors[rect_pos[ie][4]]
-
-        if rect_pos[ie][2]-rect_pos[ie][0] == 35*6:
-            continue
-        elif rect_pos[ie][3]-rect_pos[ie][1] == 24*6:
-            continue
+        if par_config.ignore_notJoined_boxes == True:
+            if rect_pos[ie][2]-rect_pos[ie][0] == 35*6:
+                continue
+            elif rect_pos[ie][3]-rect_pos[ie][1] == 24*6:
+                continue
 
         dri.rectangle(((rect_pos[ie][0]+randint(0,10), rect_pos[ie][1]+randint(0,10)),(rect_pos[ie][2]+randint(0,10),rect_pos[ie][3]+randint(0,10))), fill=(color[0], color[1], color[2], 50), outline = (color[0], color[1], color[2]))
         dri.text((int(rect_pos[ie][0]+5),int(rect_pos[ie][1]+(randint(0,80)))),str(rect_pos[ie][4]),(color[0], color[1], color[2]),font=font)

@@ -28,3 +28,5 @@ joinRoIs_considered_coverage = 0.001
 final_optimizer = "rmsprop"
 
 font_filename = "sans-serif.ttf"
+
+ignore_notJoined_boxes = True
