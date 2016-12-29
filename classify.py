@@ -1,5 +1,5 @@
 import par_config
-from random import randint
+
 from PIL import ImageFont, ImageDraw
 from PIL import Image
 import time
@@ -125,25 +125,9 @@ def testImage():
     #colors = get_spaced_colors(len(classes_in_image))
 
     dri = ImageDraw.Draw(ime , 'RGBA')
-    font = ImageFont.truetype(par_config.font_filename, 18)
+    
     core.roi_management.compareROIs(IMAGENAME + ".xml", dri, rect_pos)
-    for ie in range(len(rect_pos)):
-        #eft = classes_in_image[rect_pos[ie][4]]
-        #xxf = eft[6]-1
-        #print(len(colors))
-        #print(xxf)
-        color = colors[rect_pos[ie][4]]
-        #print(color)
-        #print(classes_in_image[rect_pos[ie][4]][6])
-        if rect_pos[ie][2]-rect_pos[ie][0] == 35*6:
-            continue
-        elif rect_pos[ie][3]-rect_pos[ie][1] == 24*6:
-            continue
-
-        #classesinit = str( rect_pos[ie][4]) + ": " + str(rect_pos[ie][5]) + "-" + str(rect_pos[ie][2]-rect_pos[ie][0])
-        #print(classesinit)
-        dri.rectangle(((rect_pos[ie][0]+randint(0,10), rect_pos[ie][1]+randint(0,10)),(rect_pos[ie][2]+randint(0,10),rect_pos[ie][3]+randint(0,10))), fill=(color[0], color[1], color[2], 50), outline = (color[0], color[1], color[2]))
-        dri.text((int(rect_pos[ie][0]+5),int(rect_pos[ie][1]+(randint(0,80)))),str(rect_pos[ie][4]),(color[0], color[1], color[2]),font=font)
+    core.roi_management.draw_boundingboxes(rect_pos,dri,colors)
     #posx = 20
     #posy = 20
     #for x in classes_in_image:

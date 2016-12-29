@@ -25,6 +25,6 @@ STRIDES = 1
 pretrained_weights_file = "image_500.h5"
 
 joinRoIs_considered_coverage = 0.001
-par_config.final_optimizer = "rmsprop"
+final_optimizer = "rmsprop"
 
 font_filename = "sans-serif.ttf"
