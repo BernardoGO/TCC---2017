@@ -27,7 +27,7 @@ def testImage():
     img = Image.open(tstImg)
     image = img.resize((img_width, img_height), Image.ANTIALIAS)#
     ime = img.resize((sizex, sizey), Image.ANTIALIAS)#
-    fonet = ImageFont.truetype("sans-serif.ttf", 18)
+    fonet = ImageFont.truetype(par_config.font_filename, 18)
     width, height = image.size
     train_x = []
     train_x.append(np.array(image))
