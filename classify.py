@@ -37,62 +37,31 @@ def testImage():
     ldModel = core.model.initializeModel()
 
 
-    #start = time.time()
+    start = time.time()
     rpn_output = ldModel.predict(np.array(train_x), batch_size=64, verbose=0)
-    #end = time.time()
+    end = time.time()
 
-    #elapsed = end - start
-    #print("Eval Time: " + str(elapsed))
+    elapsed = end - start
+    print("Eval Time: " + str(elapsed))
 
     onlyres = rpn_output[0]
     print("Drawing Heatmap")
     image = Image.new("RGB", (sizex, sizey), "black" )#img_width, img_height
 
-    #rect_pos = class_scores
-    #colors = get_spaced_colors(10)
     dr = ImageDraw.Draw(image , 'RGBA')
 
-    #17     -     150
-    #y      -      x
-    #x = (150y)//17
-    """
-    img_width, img_height = 500, 500
-    sizex, sizey = 1936, 1296
-    x0x = (img_width * 1) // 55
-    y0y = (img_height * 1) // 55
-    x0x = (x0x*sizex)/img_width
-    y0y = (y0y*sizey)/img_height
-    """
-    import time
     class_scores = []
     colors = utils.colors.get_spaced_colors(25)
     for y_ in range(len(onlyres)):
         last_x = 0
         last_x_ct = 0
         for x_ in range(len(onlyres[y_])):
-            #print(onlyres[y_][x_])
+
             clase = np.argmax(onlyres[y_][x_])
             if onlyres[y_][x_][clase] < 0.80:
                 clase = 0
             color = colors[clase]
-            #print(onlyres[y_][x_])
-            #(150*y_)//17,(150*x_)//17),((150*(y_+1))//17,(150*(x_+1))//17
-            #img_width, img_height = 500, 500
-            #sizex, sizey = 1936, 1296
-            #35.2
-            #23.56
-            #55x55
-            """
-            x0 = (img_width*x_)//55
-            y0 = (img_height*y_)//55
-            x1 = (img_width*(x_+5))//55
-            y1 = (img_height*(y_+5))//55
 
-            x0 = (x0*sizex)/img_width
-            y0 = (y0*sizey)/img_height
-            x1 = ((x1*sizex)/img_width)
-            y1 = ((y1*sizey)/img_height)
-            """
             x0 = 35*x_
             y0 = 23*y_
             x1 = 35*x_ + 35*6
@@ -113,32 +82,20 @@ def testImage():
             dr.rectangle(((x0,y0),(x1,y1)), fill=(color[0], color[1], color[2], int(10)), outline = None)
             dr.text((x0+1,y0+1),str(clase),(color[0], color[1], color[2]),font=fonet)
 
-            #dr.rectangle(((x0,y0),(x1,y1)), fill=(color[0], color[1], color[2], int(10)), outline = None)
-            #dr.text((x0+1,y0+1),str(clase),(color[0], color[1], color[2]),font=fonet)
-            #image.save("rcnn2.png", quality=100)
-            #input([(x0,y0),(x1,y1)])
-            #image.save("rcnn2.png", quality=100)
-            #time.sleep(0.5)
-            #print(((150*y_)//17,(150*x_)//17),((150*(y_+1))//17,(150*(x_+1))//17))
+
     core.roi_management.joinROIS(class_scores)
     rect_pos = class_scores
-    #colors = get_spaced_colors(len(classes_in_image))
+
 
     dri = ImageDraw.Draw(ime , 'RGBA')
-    
+
     core.roi_management.compareROIs(IMAGENAME + ".xml", dri, rect_pos)
     core.roi_management.draw_boundingboxes(rect_pos,dri,colors)
-    #posx = 20
-    #posy = 20
-    #for x in classes_in_image:
-    #    posy += 40
-    #    #color = colors[classes_in_image[x][6]]
-    #    #dr.text((posx,posy),str(x),(color[0], color[1], color[2]),font=font)
+
     ime.save("output.png", quality=100)
     image.save("output2.png", quality=100)
     print("ok")
 
-import time
 
 
 testImage()
