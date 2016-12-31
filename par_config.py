@@ -30,3 +30,7 @@ final_optimizer = "rmsprop"
 font_filename = "sans-serif.ttf"
 
 ignore_notJoined_boxes = True
+
+classify_batchsize = 64
+
+final_weights_filename = 'image_500_retr.h5'

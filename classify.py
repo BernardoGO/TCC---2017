@@ -36,9 +36,10 @@ def testImage():
     print("Initializing Model...")
     ldModel = core.model.initializeModel()
 
+    ldModel.load_weights(par_config.final_weights_filename)
 
     start = time.time()
-    rpn_output = ldModel.predict(np.array(train_x), batch_size=64, verbose=0)
+    rpn_output = ldModel.predict(np.array(train_x), batch_size=par_config.classify_batchsize, verbose=0)
     end = time.time()
 
     elapsed = end - start
