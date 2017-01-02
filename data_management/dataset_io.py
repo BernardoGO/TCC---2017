@@ -2,6 +2,7 @@ import par_config
 import csv
 from PIL import ImageFont, ImageDraw
 from PIL import Image
+import numpy as np
 
 def getData():
     #csv = pd.read_csv("supervis.csv")
@@ -12,7 +13,7 @@ def getData():
         for row in reader:
             filename = row[0]
             img = Image.open(par_config.imagePath+filename)
-            image = img.resize((img_width, img_height ), Image.ANTIALIAS)  #
+            image = img.resize((par_config.img_width, par_config.img_height ), Image.ANTIALIAS)  #
             imge = np.array(image)
             dataX.append(imge)
             dataY.append(np.array(eval(row[1]))[0:55,0:55])
