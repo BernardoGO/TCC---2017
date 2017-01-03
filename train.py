@@ -14,9 +14,8 @@ import copy
 print("Loading Data...")
 trainX, trainY = data_management.dataset_io.getData()
 
-
-# In[7]:
-
+print("Initializing Model...")
+ldModel = core.model.initializeModel()
 
 ty = copy.deepcopy(trainY)
 ty = np.array(ty)
@@ -25,6 +24,8 @@ ty = np.eye(25, dtype='uint8')[ty]
 print("Fit...")
 batch_size = 32
 nb_epoch = 200
+
+
 
 ldModel.fit(np.array(trainX), np.array(ty),
           batch_size=batch_size,
