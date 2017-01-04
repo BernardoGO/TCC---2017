@@ -11,6 +11,7 @@ import utils.classes
 import data_management.dataset_io
 import copy
 from keras.callbacks import TensorBoard
+from keras.models import save_model, load_model
 
 print("Loading Data...")
 trainX, trainY = data_management.dataset_io.getData()
