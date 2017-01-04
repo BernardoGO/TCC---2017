@@ -10,6 +10,7 @@ import utils.colors
 import utils.classes
 import data_management.dataset_io
 import copy
+from keras.callbacks import TensorBoard
 
 print("Loading Data...")
 trainX, trainY = data_management.dataset_io.getData()
@@ -25,7 +26,7 @@ print("Fit...")
 batch_size = 32
 nb_epoch = 200
 
-
+tensorboard = TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
 
 ldModel.fit(np.array(trainX), np.array(ty),
           batch_size=batch_size,
