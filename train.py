@@ -21,13 +21,13 @@ ldModel = core.model.initializeModel()
 
 ty = copy.deepcopy(trainY)
 ty = np.array(ty)
-ty = np.eye(25, dtype='uint8')[ty]
+ty = np.eye(par_config.final_class_count, dtype='uint8')[ty]
 #ty = ty.reshape((1,)+ty.shape)
 print("Fit...")
-batch_size = 32
-nb_epoch = 200
+batch_size = par_config.batch_size
+nb_epoch = par_config.retrain_epochs
 
-tensorboard = TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
+tensorboard = TensorBoard(log_dir=par_config.tensorboard_file, histogram_freq=0, write_graph=True, write_images=True)
 
 ldModel.fit(np.array(trainX), np.array(ty),
           batch_size=batch_size,
@@ -36,5 +36,5 @@ ldModel.fit(np.array(trainX), np.array(ty),
           callbacks=[tensorboard]
          )
 
-ldModel.save_weights('image_500_retrIII.h5')
-save_model(ldModel, "model_500_retrIII.h5")
+ldModel.save_weights(par_config.final_weights_filename)
+save_model(ldModel, par_config.final_model_filename)

@@ -1,11 +1,8 @@
 img_width, img_height = 500, 500
 sizex, sizey = 1936, 1296#3024,4032
-train_data_dir = 'data/train'
-validation_data_dir = 'data/validation'
-nb_train_samples = 150000
-nb_validation_samples = 24000
-epochs = 60
-batch_size = 16
+
+retrain_epochs = 200
+retrain_batch_size = 32
 imagePath = "collection/Images/users/his109/grier_food_images/"
 
 
@@ -34,3 +31,6 @@ ignore_notJoined_boxes = True
 classify_batchsize = 64
 
 final_weights_filename = 'image_500_retr.h5'
+final_model_filename = "model_500_retr.h5"
+final_class_count = 25
+tensorboard_file = './Graph'
