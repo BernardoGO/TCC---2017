@@ -74,7 +74,7 @@ def testImage():
             y1 = 24*(y_*par_config.STRIDES) + 24*6
             if clase != 0:
                 last_x_ct += 1
-                if (last_x != clase) or (last_x == clase and last_x_ct > 10):
+                if (last_x != clase) or (last_x == clase and last_x_ct > 10) or par_config.consider_full_conv == True:
                     class_scores.append([x0,y0, 35*(x_*par_config.STRIDES) + 35*2,24*(y_*par_config.STRIDES) + 24*2,clase])
                     last_x = clase
                     last_x_ct = 0
@@ -89,8 +89,8 @@ def testImage():
 
 
     dri = ImageDraw.Draw(ime , 'RGBA')
-
-    core.roi_management.compareROIs(IMAGENAME + ".xml", dri, rect_pos)
+    if par_config.compare_RoIs == True:
+        core.roi_management.compareROIs(IMAGENAME + ".xml", dri, rect_pos)
     core.roi_management.draw_boundingboxes(rect_pos,dri,colors)
 
     ime.save("output.png", quality=100)

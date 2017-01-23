@@ -16,7 +16,7 @@ _CLASSES_TO_IGNORE_ = ["plate", "rag"]
 
 test_images_folder = "test_images/"
 test_images_xml_folder = "test_images/"
-test_image_name = "dsc_1601"
+test_image_name = "dsc_1703"
 
 images_extension = ".jpg"
 STRIDES = 1
@@ -32,8 +32,8 @@ ignore_notJoined_boxes = True
 
 classify_batchsize = 64
 
-
-
+consider_full_conv = True
+compare_RoIs = False
 final_weights_filename = weights_folder+'image_500_retr.h5'
 final_model_filename =  weights_folder+"model_500_retr.h5"
 final_class_count = 25
