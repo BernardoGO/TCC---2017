@@ -82,7 +82,7 @@ def joinROIS(class_scores):
                 if xx == ii: continue
                 #rectxx = box(xx[3],xx[2], xx[1], xx[0], True)
                 #rectii = box(ii[3],ii[2], ii[1], ii[0], True)
-                iou = utils.set_operations.intersectionOverUnion(xx,ii)
+                iou = utils.set_operations.intersection_over_union(xx,ii)
 
                 #rectxx.intersects(rectii)
                 if iou > coverage and (ii[4] == xx[4]):
