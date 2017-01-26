@@ -21,6 +21,8 @@ test_image_name = "dsc_1703"
 images_extension = ".jpg"
 STRIDES = 1
 
+backgroundThreshold = 0.60
+
 pretrained_weights_file =  weights_folder+"image_500.h5"
 
 joinRoIs_considered_coverage = -0.05

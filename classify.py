@@ -8,6 +8,7 @@ import core.model
 import core.roi_management
 import utils.colors
 import utils.classes
+import utils.set_operations
 
 
 utils.classes.load_classes()
@@ -59,7 +60,7 @@ def testImage():
         for x_ in range(len(onlyres[y_])):
 
             clase = np.argmax(onlyres[y_][x_])
-            if onlyres[y_][x_][clase] < 0.80:
+            if onlyres[y_][x_][clase] < par_config.backgroundThreshold:
                 clase = 0
             color = colors[clase]
 
@@ -86,7 +87,9 @@ def testImage():
 
     core.roi_management.joinROIS(class_scores)
     rect_pos = class_scores
-
+    for x in rect_pos:
+        if abs(utils.set_operations.area(x)) < 400000:
+            rect_pos.remove(x)
 
     dri = ImageDraw.Draw(ime , 'RGBA')
     if par_config.compare_RoIs == True:
