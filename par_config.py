@@ -21,7 +21,7 @@ test_image_name = "dsc_1703"
 images_extension = ".jpg"
 STRIDES = 1
 
-backgroundThreshold = 0.60
+backgroundThreshold = 0.75
 
 pretrained_weights_file =  weights_folder+"image_500.h5"
 

@@ -86,10 +86,12 @@ def testImage():
 
 
     core.roi_management.joinROIS(class_scores)
-    rect_pos = class_scores
-    for x in rect_pos:
-        if abs(utils.set_operations.area(x)) < 400000:
-            rect_pos.remove(x)
+    rect_pos = []
+    for x in class_scores:
+        area = abs(utils.set_operations.area(x))
+        if area > 200000:
+            rect_pos.append(x)
+
 
     dri = ImageDraw.Draw(ime , 'RGBA')
     if par_config.compare_RoIs == True:
