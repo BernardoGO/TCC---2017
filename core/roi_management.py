@@ -68,7 +68,7 @@ def compareROIs(imageXmlPath, dr, rect_pos):
         dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
 
 
-def AP(imageXmlPath, rect_pos):
+def AP(imageXmlPath, rect_pos, threshold):
     sizex = par_config.sizex
     sizey = par_config.sizey
     classes = par_config.classes
@@ -115,6 +115,14 @@ def AP(imageXmlPath, rect_pos):
                 log.info(ptsLst)
                 jaccard = utils.set_operations.intersection_over_union(predObj[0:4], [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]])
                 log.info(")))))))->>" + str(jaccard))
+                if jaccard >= threshold:
+                    if predObj[4] not in detectedObjects:
+                        TP += 1
+                    else:
+                        FP += 1
+                else:
+                    FP += 1
+
 
 
 def joinROIS(class_scores):
