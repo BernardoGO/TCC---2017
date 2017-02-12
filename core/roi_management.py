@@ -76,7 +76,7 @@ def compareROIs(imageXmlPath, dr, rect_pos):
         dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
 
 
-def getBboxXML(imageXmlPath, rect_pos):
+def getBboxXML(imageXmlPath):
     sizex = par_config.sizex
     sizey = par_config.sizey
     classes = par_config.classes

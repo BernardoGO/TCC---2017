@@ -10,3 +10,8 @@ def AP(imageTitles, bboxes):
     TP = np.zeroes(numImages)
     FP = np.zeroes(numImages)
     FN = np.zeroes(numImages)
+
+    detectedClasses = []
+
+    for i, bbox in enumerate(bboxes):
+        
