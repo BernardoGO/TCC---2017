@@ -68,7 +68,7 @@ def compareROIs(imageXmlPath, dr, rect_pos):
         dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
 
 
-def AP(imageXmlPath, rect_pos, threshold):
+def getBboxXML(imageXmlPath, rect_pos):
     sizex = par_config.sizex
     sizey = par_config.sizey
     classes = par_config.classes
@@ -82,10 +82,7 @@ def AP(imageXmlPath, rect_pos, threshold):
     objects = xmlRoot.findall('object')
     count = -1
 
-    FP = 0
-    TP = 0
-    FN = 0
-    detectedObjects = []
+    objects = {}
     for annoObject in objects:
         count += 1
         name = annoObject.findall('name')[0].text.replace("_", " ")
@@ -106,22 +103,10 @@ def AP(imageXmlPath, rect_pos, threshold):
             log.info("More than 4")
             continue
 
-        #print(ptsLst)
+        objects[name] = [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]]
 
-        for predObj in rect_pos:
+    return objects
 
-            if predObj[4] == classes[name.replace(" ", "_")]:
-                log.info("---------------->>" + name + ": ")
-                log.info(ptsLst)
-                jaccard = utils.set_operations.intersection_over_union(predObj[0:4], [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]])
-                log.info(")))))))->>" + str(jaccard))
-                if jaccard >= threshold:
-                    if predObj[4] not in detectedObjects:
-                        TP += 1
-                    else:
-                        FP += 1
-                else:
-                    FP += 1
 
 
 
