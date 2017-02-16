@@ -109,7 +109,6 @@ def getBboxXML(imageXmlPath, rect_pos):
 
 
 
-
 def joinROIS(class_scores):
     print("RoI Count: " + str(len(class_scores)))
     from shapely.geometry import Polygon, box
