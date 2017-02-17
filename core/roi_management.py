@@ -1,9 +1,11 @@
 import par_config
 import logging as log
+from random import randint
+
 import utils.set_operations
 import xml.etree.ElementTree
 import utils.colors
-from random import randint
+
 from PIL import ImageFont, ImageDraw
 
 def draw_boundingboxes(rect_pos,dri,colors):
