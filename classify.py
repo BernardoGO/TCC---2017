@@ -76,7 +76,15 @@ def testImage():
             if clase != 0:
                 last_x_ct += 1
                 if (last_x != clase) or (last_x == clase and last_x_ct > 10) or par_config.consider_full_conv == True:
-                    class_scores.append([x0,y0, 35*(x_*par_config.STRIDES) + 35*2,24*(y_*par_config.STRIDES) + 24*2,clase])
+                    bbox = {}
+                    bbox["class"] = clase
+                    bbox["xmin"] = x0
+                    bbox["ymin"] = y0
+                    bbox["xmax"] = 35*(x_*par_config.STRIDES) + 35*2
+                    bbox["ymax"] = 24*(y_*par_config.STRIDES) + 24*2
+
+                    #class_scores.append([bbox["xmin"],bbox["ymin"], bbox["xmax"],bbox["ymax"],clase])
+                    class_scores.append(bbox)
                     last_x = clase
                     last_x_ct = 0
 
