@@ -14,13 +14,13 @@ def draw_boundingboxes(rect_pos,dri,colors):
 
         color = colors[rect_pos[ie][4]]
         if par_config.ignore_notJoined_boxes == True:
-            if rect_pos[ie][2]-rect_pos[ie][0] == 35*6:
+            if rect_pos[ie]["xmax"]-rect_pos[ie]["xmin"] == 35*6:
                 continue
-            elif rect_pos[ie][3]-rect_pos[ie][1] == 24*6:
+            elif rect_pos[ie]["ymax"]-rect_pos[ie]["ymin"] == 24*6:
                 continue
 
-        dri.rectangle(((rect_pos[ie][0]+randint(0,10), rect_pos[ie][1]+randint(0,10)),(rect_pos[ie][2]+randint(0,10),rect_pos[ie][3]+randint(0,10))), fill=(color[0], color[1], color[2], 50), outline = (color[0], color[1], color[2]))
-        dri.text((int(rect_pos[ie][0]+5),int(rect_pos[ie][1]+(randint(0,80)))),str(rect_pos[ie][4]),(color[0], color[1], color[2]),font=font)
+        dri.rectangle(((rect_pos[ie]["xmin"]+randint(0,10), rect_pos[ie]["ymin"]+randint(0,10)),(rect_pos[ie]["xmax"]+randint(0,10),rect_pos[ie]["ymax"]+randint(0,10))), fill=(color[0], color[1], color[2], 50), outline = (color[0], color[1], color[2]))
+        dri.text((int(rect_pos[ie]["xmin"]+5),int(rect_pos[ie]["ymin"]+(randint(0,80)))),str(rect_pos[ie][4]),(color[0], color[1], color[2]),font=font)
 
 def compareROIs(imageXmlPath, dr, rect_pos):
     sizex = par_config.sizex
@@ -64,7 +64,13 @@ def compareROIs(imageXmlPath, dr, rect_pos):
             if predObj[4] == classes[name.replace(" ", "_")]:
                 log.info("---------------->>" + name + ": ")
                 log.info(ptsLst)
-                jaccard = utils.set_operations.intersection_over_union(predObj[0:4], [ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]])
+                gtbox = {}
+                gtbox["class"] = name
+                gtbox["xmin"] = ptsLst[0]
+                gtbox["ymin"] = ptsLst[1]
+                gtbox["xmax"] = ptsLst[4]
+                gtbox["ymax"] = ptsLst[5]
+                jaccard = utils.set_operations.intersection_over_union(predObj, gtbox)#predObj[0:4]   #[ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]]
                 log.info(")))))))->>" + str(jaccard))
 
         dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
@@ -131,10 +137,10 @@ def joinROIS(class_scores):
                 #rectxx.intersects(rectii)
                 if iou > coverage and (ii[4] == xx[4]):
                     #print(coverage)
-                    ii[0] = min(ii[0],  xx[0])
-                    ii[1] = min(ii[1],  xx[1])
-                    ii[2] = max(ii[2],  xx[2])
-                    ii[3] = max(ii[3],  xx[3])
+                    ii["xmin"] = min(ii["xmin"],  xx["xmin"])
+                    ii["ymin"] = min(ii["ymin"],  xx["ymin"])
+                    ii["xmax"] = max(ii["xmax"],  xx["xmax"])
+                    ii["ymax"] = max(ii["ymax"],  xx["ymax"])
                     class_scores.remove(xx)
                     breako = True
                     break
