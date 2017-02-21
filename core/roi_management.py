@@ -12,7 +12,7 @@ def draw_boundingboxes(rect_pos,dri,colors):
     font = ImageFont.truetype(par_config.font_filename, 18)
     for ie in range(len(rect_pos)):
 
-        color = colors[rect_pos[ie][4]]
+        color = colors[rect_pos[ie]["class"]]
         if par_config.ignore_notJoined_boxes == True:
             if rect_pos[ie]["xmax"]-rect_pos[ie]["xmin"] == 35*6:
                 continue
@@ -20,7 +20,7 @@ def draw_boundingboxes(rect_pos,dri,colors):
                 continue
 
         dri.rectangle(((rect_pos[ie]["xmin"]+randint(0,10), rect_pos[ie]["ymin"]+randint(0,10)),(rect_pos[ie]["xmax"]+randint(0,10),rect_pos[ie]["ymax"]+randint(0,10))), fill=(color[0], color[1], color[2], 50), outline = (color[0], color[1], color[2]))
-        dri.text((int(rect_pos[ie]["xmin"]+5),int(rect_pos[ie]["ymin"]+(randint(0,80)))),str(rect_pos[ie][4]),(color[0], color[1], color[2]),font=font)
+        dri.text((int(rect_pos[ie]["xmin"]+5),int(rect_pos[ie]["ymin"]+(randint(0,80)))),str(rect_pos[ie]["class"]),(color[0], color[1], color[2]),font=font)
 
 def compareROIs(imageXmlPath, dr, rect_pos):
     sizex = par_config.sizex
@@ -61,7 +61,7 @@ def compareROIs(imageXmlPath, dr, rect_pos):
 
         for predObj in rect_pos:
 
-            if predObj[4] == classes[name.replace(" ", "_")]:
+            if predObj["class"] == classes[name.replace(" ", "_")]:
                 log.info("---------------->>" + name + ": ")
                 log.info(ptsLst)
                 gtbox = {}
@@ -135,7 +135,7 @@ def joinROIS(class_scores):
                 iou = utils.set_operations.intersection_over_union(xx,ii)
 
                 #rectxx.intersects(rectii)
-                if iou > coverage and (ii[4] == xx[4]):
+                if iou > coverage and (ii["class"] == xx["class"]):
                     #print(coverage)
                     ii["xmin"] = min(ii["xmin"],  xx["xmin"])
                     ii["ymin"] = min(ii["ymin"],  xx["ymin"])
