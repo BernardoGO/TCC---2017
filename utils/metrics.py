@@ -3,6 +3,7 @@ import logging as log
 from random import randint
 
 import utils.set_operations
+import core.roi_management
 import numpy as np
 
 def AP(imageTitles, bboxes):
@@ -14,4 +15,4 @@ def AP(imageTitles, bboxes):
     detectedClasses = []
 
     for i, bbox in enumerate(bboxes):
-        
+        core.roi_management
