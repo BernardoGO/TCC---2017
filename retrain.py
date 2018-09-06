@@ -1,5 +1,3 @@
-
-import par_config
 from PIL import ImageFont, ImageDraw
 from PIL import Image
 import time
@@ -12,6 +10,7 @@ import data_management.dataset_io
 import copy
 from keras.callbacks import TensorBoard
 from keras.models import save_model, load_model
+import par_config
 
 print("Loading Data...")
 trainX, trainY = data_management.dataset_io.getData()
@@ -24,7 +23,7 @@ ty = np.array(ty)
 ty = np.eye(par_config.final_class_count, dtype='uint8')[ty]
 #ty = ty.reshape((1,)+ty.shape)
 print("Fit...")
-batch_size = par_config.batch_size
+batch_size = par_config.retrain_batch_size
 nb_epoch = par_config.retrain_epochs
 
 tensorboard = TensorBoard(log_dir=par_config.tensorboard_file, histogram_freq=0, write_graph=True, write_images=True)
@@ -36,5 +35,10 @@ ldModel.fit(np.array(trainX), np.array(ty),
           callbacks=[tensorboard]
          )
 
+#ldModel.save_weights(par_config.final_weights_filename)
+#save_model(ldModel, par_config.final_model_filename)
+
+
+#NO RETRAIN TEST
 ldModel.save_weights(par_config.final_weights_filename)
 save_model(ldModel, par_config.final_model_filename)

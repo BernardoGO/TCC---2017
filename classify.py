@@ -9,21 +9,20 @@ import core.roi_management
 import utils.colors
 import utils.classes
 import utils.set_operations
-
-
+import glob
 utils.classes.load_classes()
+import pickle
+import csv
 
-
-
-def testImage():
+def testImage(tstImg):
 
     img_width = par_config.img_width
     img_height = par_config.img_height
     sizex = par_config.sizex
     sizey = par_config.sizey
 
-    IMAGENAME = par_config.test_images_folder+ par_config.test_image_name
-    tstImg = IMAGENAME + ".jpg"
+    #IMAGENAME = par_config.test_images_folder+ par_config.test_image_name
+    #tstImg = IMAGENAME + ".jpg"
     #tstImg = "dsc_1734.jpg"
     img = Image.open(tstImg)
     image = img.resize((img_width, img_height), Image.ANTIALIAS)#
@@ -34,7 +33,7 @@ def testImage():
     train_x.append(np.array(image))
 
 
-    print("Initializing Model...")
+    ##########print("Initializing Model...")
     ldModel = core.model.initializeModel()
 
     ldModel.load_weights(par_config.final_weights_filename)
@@ -44,10 +43,10 @@ def testImage():
     end = time.time()
 
     elapsed = end - start
-    print("Eval Time: " + str(elapsed))
+    ##########print("Eval Time: " + str(elapsed))
 
     onlyres = rpn_output[0]
-    print("Drawing Heatmap")
+    ##########print("Drawing Heatmap")
     image = Image.new("RGB", (sizex, sizey), "black" )#img_width, img_height
 
     dr = ImageDraw.Draw(image , 'RGBA')
@@ -102,14 +101,49 @@ def testImage():
 
 
     dri = ImageDraw.Draw(ime , 'RGBA')
-    if par_config.compare_RoIs == True:
-        core.roi_management.compareROIs(IMAGENAME + ".xml", dri, rect_pos)
+    imagename = tstImg.split("/")[-1]
+    imagenwoex = imagename.split('.')[0]
+
+    #if par_config.compare_RoIs == True:
+    meanroi = core.roi_management.compareROIs(par_config.xmlPath +imagenwoex + ".xml", dri, rect_pos)
+    ##########print(['mean', meanroi])
     core.roi_management.draw_boundingboxes(rect_pos,dri,colors)
 
-    ime.save("output.png", quality=100)
-    image.save("output2.png", quality=100)
-    print("ok")
+    #ime.save("output.png", quality=100)
+    #image.save("output2.png", quality=100)
+    
+
+    #bboxes = core.roi_management.getBboxXML(par_config.xmlPath + imagenwoex + par_config.xmlExt)
+    ime.save("detectionNON/" + imagename, quality=100)
+    image.save("heatmapNON/" + imagename, quality=100)
+    ##########print("ok")
+    return meanroi
+
+
+#parser_logger.setLevel(logging.INFO)
+lista = glob.glob("testimg/*.jpg")
+text_file = open("Output.txt", "w")
+
+while True:
+    print(['threshhold', par_config.backgroundThreshold])
+    considered = 0
+    sumroi = 0
+    for x in lista: 
+        print(x)
+        considered += 1
+        actroi = testImage(x)
+        print(actroi)
+        text_file.write(str(actroi)+"\n")
+
+        sumroi += actroi
 
 
 
-testImage()
+    row = [par_config.backgroundThreshold, sumroi/considered]
+    with open(r'roc.csv', 'a') as f:
+        writer = csv.writer(f)
+        writer.writerow(row)
+    par_config.backgroundThreshold += 0.10
+    break
+
+    
