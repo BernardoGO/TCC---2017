@@ -35,7 +35,8 @@ def compareROIs(imageXmlPath, dr, rect_pos):
 
     objects = xmlRoot.findall('object')
     count = -1
-
+    considered = 0
+    sumjacc = 0
 
     for annoObject in objects:
         count += 1
@@ -70,11 +71,15 @@ def compareROIs(imageXmlPath, dr, rect_pos):
                 gtbox["ymin"] = ptsLst[1]
                 gtbox["xmax"] = ptsLst[4]
                 gtbox["ymax"] = ptsLst[5]
-                jaccard = utils.set_operations.intersection_over_union(predObj, gtbox)#predObj[0:4]   #[ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]]
-                log.info(")))))))->>" + str(jaccard))
+                jaccard = utils.set_operations.intersectionOverUnion(predObj, gtbox)#predObj[0:4]   #[ptsLst[0],ptsLst[1],ptsLst[4],ptsLst[5]]
+                ##########print(")))))))->>" + str(jaccard))
+                considered += 1
+                sumjacc += jaccard
 
-        dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
-
+        #dr.polygon(ptsLst, fill=(0, 0, 0, 50), outline = (255, 255, 255))
+    if considered == 0:
+        return 0
+    return sumjacc/considered
 
 def getBboxXML(imageXmlPath):
     sizex = par_config.sizex
@@ -118,9 +123,9 @@ def getBboxXML(imageXmlPath):
 
 
 def joinROIS(class_scores):
-    print("RoI Count: " + str(len(class_scores)))
+    ##########print("RoI Count: " + str(len(class_scores)))
     from shapely.geometry import Polygon, box
-    print("joining rois")
+    ##########print("joining rois")
     foid = True
     coverage = par_config.joinRoIs_considered_coverage
     while foid:

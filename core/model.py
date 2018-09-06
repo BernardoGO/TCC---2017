@@ -19,12 +19,12 @@ def initializeModel():
     model.add(Activation('relu', trainable=False))
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    model.add(Conv2D(32, (3, 3), trainable=False))
-    model.add(Activation('relu', trainable=False))
+    model.add(Conv2D(32, (3, 3), trainable=True)) #2
+    model.add(Activation('relu', trainable=True)) #2
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
-    model.add(Conv2D(64, (3, 3), trainable=True))
-    model.add(Activation('relu', trainable=True))
+    model.add(Conv2D(64, (3, 3), trainable=True)) #1
+    model.add(Activation('relu', trainable=True)) #1
     model.add(MaxPooling2D(pool_size=(2, 2)))
 
     model.add(Flatten())
@@ -65,7 +65,7 @@ def initializeModel():
         model.compile(loss='binary_crossentropy',
                   optimizer='rmsprop',
                   metrics=['accuracy'])
-    model.summary()
+    #model.summary()
     return model
 
 
